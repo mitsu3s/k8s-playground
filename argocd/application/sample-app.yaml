@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-nginx
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mitsu3s/k8s-playground.git
+    targetRevision: main
+    path: apps/hello-nginx
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: app
