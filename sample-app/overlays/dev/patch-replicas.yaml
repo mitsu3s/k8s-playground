@@ -4,4 +4,4 @@ metadata:
   name: hello-nginx
   namespace: app
 spec:
-  replicas: 1
+  replicas: 2
