@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/mitsu3s/k8s-playground.git
     targetRevision: main
-    path: apps/hello-nginx
+    path: sample-app
   destination:
     server: https://kubernetes.default.svc
     namespace: app
