@@ -12,4 +12,4 @@ spec:
     - name: http
       port: 80          # Service(ClusterIP側)のポート
       targetPort: 8080  # argocd-server コンテナのポート
-      nodePort: 32080   # ← 空いてる番号（hello-nginxの30080と被らない）
+      nodePort: 32080   # ← 空いてる番号
