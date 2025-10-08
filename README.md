@@ -2,44 +2,46 @@
 
 オンプレミスの小規模環境（仮想マシン 3 台: マスター 1 / ワーカー 2）で Kubernetes クラスターを構築し、Argo CD でアプリを継続デプロイするための最小構成リポジトリです。
 
-現状、L2/LB（例: MetalLB）は未導入のため、Argo CD へのアクセスは ポートフォワード を利用します。
+現状、L2/LB（例: MetalLB）は未導入のため、Argo CD へのアクセスはポートフォワードを利用します。
 
 ## Features
 
 - CNI は Calico
 - GitOps は Argo CD
-- サンプルアプリの環境差分は kustomization のオーバーレイで管理
+- サンプルアプリの環境差分は Kustomize のオーバーレイで管理
 
 ## Usage
 
 ### 1. クラスターの構築
 
+環境に合わせてクラスターを構築してください。今回は Calico を利用し、Pod ネットワークの CIDR をデフォルトから変更しています。
+
 ```shell
-### 環境に合わせてクラスターを構築してください
-### なお、今回はCalicoを利用し、仮想ネットワーク帯域をデフォルトから変更しています
-### kubeadm による構築であれば、下記のようにCIDRを指定します
-$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+### kubeadm による構築例（CIDR を指定）
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
 
 ### 2. Calico の導入
 
+Calico の導入は公式ドキュメント（`https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises`）を参照してください。
+
+本リポジトリにはネットワーク帯域（CIDR）を変更した `custom-resources.yaml` を用意しているため、以下で適用します。
+
 ```shell
-### [Calico の公式ドキュメント](https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises) を参考に導入してください。
-### なお、cutom-resources.yaml に関しては、ネットワークの帯域を変更したものが本リポジトリに用意いるので、こちらで適用してください。
-$ kubectl apply -f calico/custom-resources.yaml
+### ネットワーク帯域を変更した Calico の導入
+kubectl apply -f calico/custom-resources.yaml
 ```
 
 ### 3. Argo CD の導入
 
+Argo CD の導入は公式ドキュメント（`https://argo-cd.readthedocs.io/en/stable/getting_started`）を参照してください。
+
 ```shell
-### Argo CD を導入します
-### [Argo CD の公式ドキュメント](https://argo-cd.readthedocs.io/en/stable/getting_started) を参考に導入してください。
+### 現状 L2/LB を導入していないため、公開方法の例として NodePort を利用します。
+kubectl apply -f argocd/argocd-nodeport.yaml
 
-### 現状では、L2/LBを導入していないため、ポートフォワードでアクセスします
-$ kubectl apply -f argocd/argocd-server-nodeport.yaml
-
-### アプリケーションのデプロイをすると、UIからアプリケーションの状態を確認できます
-$ kubectl apply -f argocd/sample-app.yaml
+### Argo CD の サンプル Application を作成
+kubectl apply -f argocd/application/sample-app.yaml
 ```
 
 ## Kustomize の構成
