@@ -23,7 +23,7 @@ $ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
 ### 2. Calico の導入
 
-Calico の導入は公式ドキュメント（`https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises`）を参照してください。
+Calico の導入は[公式ドキュメント](`https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/onpremises`)を参照してください。
 
 本リポジトリにはネットワーク帯域（CIDR）を変更した `custom-resources.yaml` を用意しているため、以下で適用します。
 
@@ -34,7 +34,7 @@ $ kubectl apply -f calico/custom-resources.yaml
 
 ### 3. Argo CD の導入
 
-Argo CD の導入は公式ドキュメント（`https://argo-cd.readthedocs.io/en/stable/getting_started`）を参照してください。
+Argo CD の導入は[公式ドキュメント](`https://argo-cd.readthedocs.io/en/stable/getting_started`)を参照してください。
 
 ```shell
 ### 現状 L2/LB を導入していないため、公開方法の例として NodePort を利用します。
