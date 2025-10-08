@@ -18,7 +18,7 @@
 
 ```shell
 ### kubeadm による構築例（CIDR を指定）
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
 
 ### 2. Calico の導入
@@ -28,8 +28,8 @@ Calico の導入は公式ドキュメント（`https://docs.tigera.io/calico/lat
 本リポジトリにはネットワーク帯域（CIDR）を変更した `custom-resources.yaml` を用意しているため、以下で適用します。
 
 ```shell
-### ネットワーク帯域を変更した Calico の導入
-kubectl apply -f calico/custom-resources.yaml
+### ネットワーク帯域を変更したカスタムリソースの導入
+$ kubectl apply -f calico/custom-resources.yaml
 ```
 
 ### 3. Argo CD の導入
@@ -38,10 +38,10 @@ Argo CD の導入は公式ドキュメント（`https://argo-cd.readthedocs.io/e
 
 ```shell
 ### 現状 L2/LB を導入していないため、公開方法の例として NodePort を利用します。
-kubectl apply -f argocd/argocd-nodeport.yaml
+$ kubectl apply -f argocd/argocd-nodeport.yaml
 
 ### Argo CD の サンプル Application を作成
-kubectl apply -f argocd/application/sample-app.yaml
+$ kubectl apply -f argocd/application/sample-app.yaml
 ```
 
 ## Kustomize の構成
